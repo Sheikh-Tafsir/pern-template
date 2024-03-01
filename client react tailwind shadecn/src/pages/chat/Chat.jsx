@@ -3,15 +3,15 @@ import './Chat.css'; // Import your custom CSS file
 import axios from 'axios'
 import { IoMdSend } from "react-icons/io";
 import PubNub from 'pubnub';
-import { useLocation } from 'react-router-dom';
 
 import {useUserContext} from '../../context/UserContext';
-import NavigationBar from '../landingPage/navbar/NavigationBar';
-import { apiPath } from '@/utils/apiPath';
+import PageLoading from '@/mycomponenrs/loading/PageLoading';
+import { Skeleton } from "@/components/ui/skeleton"
 
 const Chat = ({ receiverUser }) =>{
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [pageLoading, setPageLoading] = useState(true);
 
   const {userInfo} = useUserContext();
   receiverUser = receiverUser || { id: -1 };
@@ -89,7 +89,8 @@ const Chat = ({ receiverUser }) =>{
         },
       ) 
       // setPageLoading(false);
-      console.log(response.data);
+      //console.log(response.data);
+      setPageLoading(false);
       const Chats=response.data.chats;
 
       const formattedMessages = Chats.map(chat => {
@@ -112,17 +113,24 @@ const Chat = ({ receiverUser }) =>{
     //console.log(sortedMessages);
 
     } catch (error) {
+      setPageLoading(false);
       console.error(error.message);
     };
   }
 
   useEffect(() => {
     // console.log(userInfo);
-    if(receiverUser.id !=-1)getAllMessages();
+    if(receiverUser.id !=-1){
+      setPageLoading(true);
+      getAllMessages();
+    }
   }, []);
   useEffect(() => {
     // console.log(userInfo);
-    if(receiverUser.id !=-1)getAllMessages();
+    if(receiverUser.id !=-1){
+      setPageLoading(true);
+      getAllMessages();
+    }
   }, [receiverUser.id]);
 
   useEffect(() => {
@@ -164,13 +172,52 @@ const Chat = ({ receiverUser }) =>{
       </div>
     )
   }
+  if(pageLoading){
+    return (
+      <div className="chat">
+        <div className="chat_mainBox">
+          <div className='chat-header '>
+            <Skeleton className='chat-headerImage' />
+          </div>
+          <div className="chat-messageBox">
+              <Skeleton className='chat-messages chat-myMessage h-[2.5vw] w-[4vw] rounded-xl' >
+                <p></p>
+              </Skeleton>
+              <Skeleton className='chat-messages chat-myMessage h-[2.5vw] w-[7vw] rounded-xl' >
+                <p></p>
+              </Skeleton>
+
+              
+              <Skeleton className='chat-messages chat-othersMessage h-[2.5vw] w-[8vw] rounded-xl' >
+                <p></p>
+              </Skeleton>
+              <Skeleton className='chat-messages chat-othersMessage h-[2.5vw] w-[6vw] rounded-xl' >
+                <p></p>
+              </Skeleton>
+
+              <Skeleton className='chat-messages chat-myMessage h-[2.5vw] w-[10vw] rounded-xl' >
+                <p></p>
+              </Skeleton>
+
+              <Skeleton className='chat-messages chat-othersMessage h-[2.5vw] w-[7vw] rounded-xl' >
+                <p></p>
+              </Skeleton>
+              <Skeleton className='chat-messages chat-othersMessage h-[2.5vw] w-[10vw] rounded-xl' >
+                <p></p>
+              </Skeleton>
+          </div>
+          
+        </div>
+      </div>
+    )
+  }
   return (
     <>
       {/* <NavigationBar /> */}
       <div className="chat">
         <div className="chat_mainBox">
           <div className='chat-header '>
-            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" className='chat-headerImage'/>
             <h2>{receiverUser.name}</h2>
           </div>
           <div className="chat-messageBox">

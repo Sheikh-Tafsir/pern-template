@@ -20,7 +20,7 @@ const Login = () => {
     const {userInfo, setUserInfo} = useUserContext();
 
     const loginUser = async () => {         
-        
+        setLoginStatus("");
         if(username === "" || username == null || username === undefined){
             setLoginStatus("Name is empty");
         }

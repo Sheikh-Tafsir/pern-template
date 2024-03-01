@@ -21,7 +21,7 @@ const Signup = () => {
     const {userInfo, setUserInfo} = useUserContext();
 
     const loginUser = async() => {         
-        setSignupStatus("please wait...");
+        setSignupStatus("");
         
         if(userName === "" || userName == null || userName === undefined){
             setSignupStatus("Name is empty");

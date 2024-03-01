@@ -33,7 +33,7 @@
   margin: auto;
 }
 .chat-header{
-  height: 4vw;
+  height: 4.5vw;
   display: flex;
   align-items: center;
   padding: 0 1vw;
@@ -41,14 +41,20 @@
   color: white;
   background-color: rgb(9,111,110);
 }
-.chat-header img{
+/* .chat-header img{
   border-radius: 50%;
   height: 70%;
   aspect-ratio: 1;
   margin-right: 0.5vw;
+} */
+.chat-headerImage{
+  border-radius: 50%;
+  height: 2.5vw;
+  aspect-ratio: 1;
+  margin-right: 0.5vw;
 }
 .chat-messageBox {
-  /* height: 36vw; */
+  height: 36vw;
   display: flex;
   flex-direction: column;
   overflow-y: auto;

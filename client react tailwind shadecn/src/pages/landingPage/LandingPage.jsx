@@ -1,13 +1,13 @@
 import React from 'react'
-import NavigationBar from './navbar/NavigationBar';
 import Heromain from './heromain/Heromain';
-import CopyRight from './copyright/CopyRight';
+import NavigationBar from '@/mycomponenrs/navbar/NavigationBar';
+import CopyRight from '@/mycomponenrs/copyright/CopyRight';
 const LandingPage = () => {
   return (
     <>
         <NavigationBar/>
         <Heromain/>
-        <CopyRight/>
+        <CopyRight />
     </>
   )
 }

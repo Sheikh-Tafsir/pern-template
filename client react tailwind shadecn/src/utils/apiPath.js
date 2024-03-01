@@ -1,1 +1,1 @@
-export const apiPath = 'http://192.168.1.64:8001';
+export const apiPath = 'http://192.168.1.58:8001';
