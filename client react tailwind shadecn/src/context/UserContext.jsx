@@ -1,4 +1,5 @@
 // UserContext.js
+import { checkUser } from '@/utils/checkUser';
 import React, {createContext, useContext, useState, useEffect} from 'react';
 
 const UserContext = createContext();
@@ -11,13 +12,8 @@ export const UserProvider = ({children}) => {
   const [userInfo, setUserInfo] = useState([]);
   
   const fetchData = () => {
-    const hackInShellUser = localStorage.getItem('hackInShellUser');
-    if(hackInShellUser && userInfo != JSON.parse(hackInShellUser)) {
-      setUserInfo(JSON.parse(hackInShellUser));
-    }
-    // if(hackInShellUser) {
-    //   setUserInfo(JSON.parse(hackInShellUser));
-    // }
+    const user = checkUser();
+    setUserInfo(user);
   };
 
   useEffect(() => {
@@ -31,4 +27,3 @@ export const UserProvider = ({children}) => {
   );
 };
 
-//export default UserContext;

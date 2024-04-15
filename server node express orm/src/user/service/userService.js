@@ -1,38 +1,19 @@
-const UserModel = require("../model/userModel");
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
-const SECRET_KEY = process.env.PASSWORD_ENCRYPT_SECRET_KEY;
-const bcrypt = require('bcrypt');
+const PermissionModel = require("../../roles/model/PermissionModel");
+const RoleModel = require("../../roles/model/RoleModel");
+const UserModel = require("../model/UserModel");
+const { Op } = require('sequelize');
 
-//login
-const login = async (name, password) => {
-    try {
-        const user = await UserModel.findOne({
-            where: {
-                name: name
-            }
-        });
-        
-        if (!user) {
-            return { message: "User does not exist" }
-           // throw new Error("User does not exist");
-        }
-
-        const passwordMatch = await comparePassword(password, user.password);
-        if (!passwordMatch) {
-            return { message: "Password is incorrect" }
-            //throw new Error("Password is incorrect")
-        }
-
-        const token = jwt.sign({ name: name }, SECRET_KEY);
-
+const getAllUsers = async() =>{
+    try{
+        const user = await UserModel.findAll({
+            attributes: { exclude: ['password'] } // Exclude the password field
+        }); 
         return {
-            message: "Login successful",
-            user: user,
-            token: token
+            message: "found all users",
+            user:user
         };
     } catch (error) {
-        console.error("Error during login:", error.message);
+        console.error("Error getting all user:", error.message);
         //throw new Error("Internal server error");
         return {
             message: error.message,
@@ -40,39 +21,20 @@ const login = async (name, password) => {
     }
 };
 
-
-//signup
-const signup = async (name, email, password) => {
-    try {
-        const existingUserByName = await UserModel.findOne({ where: { name: name } });
-        if (existingUserByName) {
-            return { message: "Name already taken" };
-        }
-
-        // Check if the email is already taken
-        const existingUserByEmail = await UserModel.findOne({ where: { email: email } });
-        if (existingUserByEmail) {
-            return { message: "Email already taken" };
-        }
-
-        const hashedPassword = hashPassword(password);
-
-        // Create the user
-        const newUser = await UserModel.create({
-            name: name,
-            email: email,
-            password: hashedPassword // Store the hashed password
+const getUsersById = async( id ) =>{
+    try{
+        const user = await UserModel.findOne({
+            where: {
+                id: id
+            },
+            attributes: { exclude: ['password'] }
         });
-
-        const token = jwt.sign({ name: name }, SECRET_KEY);
-
         return {
-            message: "Signup successful",
-            user: user,
-            token: token
+            message: "found user by id",
+            user:user
         };
     } catch (error) {
-        console.error("Error during signup:", error.message);
+        console.error("Error getting user by id:", error.message);
         //throw new Error("Internal server error");
         return {
             message: error.message,
@@ -81,18 +43,18 @@ const signup = async (name, email, password) => {
 };
 
 //update
-const updateProfile = async (id, name, email, image, phoneNo, postalCode, address, addressLatitude, addressLongitude) => {
+const updateUser = async (id, name, email) => {
     try {
         // Check if the provided name already exists for another user
         const existingUserWithName = await UserModel.findOne({ where: { name: name, id: { [Op.ne]: id } } });
         if (existingUserWithName) {
-            return res.status(409).json({ error: "User with this name already exists" });
+            return { message: "User with this name already exists" };
         }
 
         // Check if the provided email already exists for another user
-        const existingUserWithEmail = await UserModel.findOne({ where: { email: email, id: { [Op.ne]: id } } });
+        const existingUserWithEmail = await UserModel.findOne({ where: { email: email, id: { [Op.ne]: id } }});
         if (existingUserWithEmail) {
-            return res.status(409).json({ error: "User with this email already exists" });
+            return { message: "User with this email already exists" };
         }
 
         // Update the user profile
@@ -100,12 +62,7 @@ const updateProfile = async (id, name, email, image, phoneNo, postalCode, addres
             {
               name: name,
               email: email,
-              image: image,
-              phoneNo: phoneNo,
-              postalCode: postalCode,
-              address: address,
-              addressLongitude: addressLongitude,
-              addressLatitude: addressLatitude,
+            //   role: role,
             },
             { where: { id: id }, returning: true }
         );
@@ -115,10 +72,27 @@ const updateProfile = async (id, name, email, image, phoneNo, postalCode, addres
         }
 
         return {
-            message: "Profile updated successfully",
+            message: "User Profile updated",
             user: updatedUser[1][0]
-        }
+        };
           
+    } catch (error) {
+        console.error("Error updating profile:", error.message);
+        //throw new Error("Internal server error");
+        return {
+            message: error.message,
+        };
+    }
+};
+
+//delete
+const deleteUser = async (id) => {
+    try {
+        const deletedUser = await User.findByIdAndDelete(userId);
+        return {
+            message: "user deleted",
+            user: deletedUser
+        };
     } catch (error) {
         console.error("Error during signup:", error.message);
         //throw new Error("Internal server error");
@@ -128,27 +102,62 @@ const updateProfile = async (id, name, email, image, phoneNo, postalCode, addres
     }
 };
 
+const getAllRoles = async () => {
+    try{
+        //const roles = await RoleModel.findAll();
+        
+        // Fetch roles along with associated permissions
+        const roles = await RoleModel.findAll({
+            include: PermissionModel, // Include PermissionModel association
+        });
 
-//Function to hash the password (you need to implement this based on your chosen library)
-const hashPassword = async (password) => {
-    return password
-    // try {
-    //   const salt = await bcrypt.genSalt(saltRounds);
-    //   const hashedPassword = await bcrypt.hash(password, salt);
-    //   return hashedPassword;
-    // } catch (error) {
-    //   throw error;
-    // }
-};
+        //console.log(roles);
+        return {
+            message: "found all roles",
+            roles:roles
+        };
+    } catch (error) {
+        console.error("Error getting all roles:", error.message);
+        return {
+            message: error.message,
+        };
+    }
+}
 
-const comparePassword = async (typedPassword, userPassword) => {
-    //return await bcrypt.compare(typedPassword, userPassword);
-    return typedPassword == userPassword;
+//update
+const updateUserRole = async (id, role) => {
+    try {
+        // Update the user profile
+        const updatedUser = await UserModel.update(
+            {
+              role: role,
+            },
+            { where: { id: id }, returning: true }
+        );
+      
+        if (updatedUser[0] === 0) {
+            return { message: "User not found" };
+        }
+
+        return {
+            message: "User role updated",
+            user: updatedUser[1][0]
+        };
+          
+    } catch (error) {
+        console.error("Error updating user role:", error.message);
+        //throw new Error("Internal server error");
+        return {
+            message: error.message,
+        };
+    }
 };
 
 module.exports = {
-    login,  
-    signup,
-    updateProfile
-
-};
+    getAllUsers,
+    getUsersById,
+    updateUser,
+    deleteUser,
+    getAllRoles,
+    updateUserRole,
+}

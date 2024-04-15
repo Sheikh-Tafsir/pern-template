@@ -2,7 +2,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../../config/sequalizeConfig'); // Assuming your Sequelize instance is defined in a separate file
 
-const UserModel = sequelize.define('people', {
+const UserModel = sequelize.define('users', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -16,35 +16,14 @@ const UserModel = sequelize.define('people', {
       type: DataTypes.STRING,
       allowNull: false
     },
-    phoneNo: {
-      type: DataTypes.STRING,
-      field: 'phone_no'
-    },
     password: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    image: {
-      type: DataTypes.STRING
+    role: {
+      type: DataTypes.INTEGER,
+      field: 'role_id'
     },
-    postalCode: {
-      type: DataTypes.STRING,
-      field: 'postal_code'
-    },
-    address: {
-      type: DataTypes.STRING
-    },
-    addressLongitude: {
-      type: DataTypes.FLOAT,
-      field: 'address_longitude'
-    },
-    addressLatitude: {
-      type: DataTypes.FLOAT,
-      field: 'address_latitude'
-    },
-    rating: {
-      type: DataTypes.FLOAT
-    }
   },
   {
       timestamps: false // Disable automatic timestamp tracking

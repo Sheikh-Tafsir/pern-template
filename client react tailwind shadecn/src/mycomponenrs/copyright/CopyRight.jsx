@@ -7,7 +7,7 @@ const CopyRight = () => {
     <div className='copyright'>
         <div className='copyright_mainBox'>
             <div className='copyright_textBox'>
-                <p> &copy; 2024 ReplyMind AI Ltd. Copyright and rights reserved</p>
+                <p> &copy; 2024 Tafsir Rahman Copyright and rights reserved</p>
             </div>
             <div className='copyright_iconBox'>
                 <FaFacebookF className='copyright_icons'/>

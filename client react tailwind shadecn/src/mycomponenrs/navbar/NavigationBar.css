@@ -1,11 +1,17 @@
 .homepage_navigation{
     position: relative;
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 992px) {
     .homepage_navigation_mainBox{
         height: 5.5vw;
         display: flex;
         background-color: rgb(255,255,255);
+        position: absolute;
+        z-index: 100000;
+    }
+    .homepage_navigation_fixed{
+        position: fixed;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     }
     .homepage_navigation_logoBar{
         width: 29%;
@@ -40,12 +46,12 @@
     }
 
     .homepage_navigation_navSubMenu{
-        width: 34vw;
+        width: 45vw;
         margin-left: 6.5vw;
         margin-right: 0;
         /* background-color: blue; */
         display: flex;
-        justify-content: space-between;
+        /* justify-content: space-between; */
         align-items: center;
         
     }
@@ -53,6 +59,7 @@
         font-size: 1vw;
         transition: linear 0.1s;
         cursor: pointer;
+        margin-right: 2vw;
         /* background-color: pink; */
     }
     .navMenuPageLinksWhy{
@@ -60,17 +67,7 @@
         height: 5.5vw;
         display: flex;
         align-items: center;
-
-
     }
-    /* .navbar_login{
-        font-size: 1.vw;
-        font-weight: 600;
-        width: 5vw;
-        text-align: left;
-        margin-left: 5vw;
-        
-    } */
     .homepage_navigation_loginButton{
         background-color: rgb(9,111,88);
         font-size: 1.vw;
@@ -80,124 +77,27 @@
         color: white;
     }
 }
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    .navigation{
-        background-color: rgb(47,119,111);
-        
-    }
-    .logoBar{
-        width: 25vw;
-        height: 3vw;
-        background-color: rgb(47,119,111);
-        display: flex;
-        justify-content: space-between;
-        z-index: 1000;
-    }
-    .logoBar img{
-        height: 45%;
-        /* margin-left: 5%; */
-        margin-left: 13%;
-        margin-top: 8.5%;
-        
-    }
-    .navBarIconBar{
-        margin-right: 5%;
-        /* transform: translateY(2vw); */
-        
-    }
-    .navBurgerIcon{
-        position: absolute;
-        top:4vw;
-        right: 5vw;
-        /* top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%); */
-        font-size: 4vw;
-        /* margin-right: 5%; */
-        color: white;
-    }
-    .navBarIconCross{
-        visibility: hidden;
-        /* transform: translateY(-4vw); */
-    }
-    .navMain{
-        position: absolute;
-        width: 100%;
-        height: 92vh;
-        transform: translateY(-49vw);
-        visibility: hidden;
-        transition: linear 0.2s;
-        z-index: 1000;
-    }
-    .navMenu{
-        /* height: 34vh; */
-        height: 48vw;
-        width: 100%;
-        color: white;
-        color: rgb(37,90,84);
-        background-color: rgb(228, 228, 228);
-        transition: linear 0.2s;
-    }
-    .navSubMenu{
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        /* padding-top: 2.5vh; */
-        padding-top: 4vw;
-    }
-    .navMenuPageLinks{
-        /* font-size: 1.6vh; */
-        font-size: 2.4vw;
-        /* height: 4.3vh; */
-        height: 6.2vw;
-        transition: linear 0.1s;
-        cursor: pointer;
-    }
-    .watchButton{
-        display: flex;
-        width: 86%;
-        height: 7.2vw;
-        margin: auto;
-        border-radius: 5vw;
-        border: 1.5px solid rgb(37,90,84);
-        font-weight: 700;
-        /* font-size: 1.7vh; */
-        font-size: 2.3vw;
-        transition: linear 0.2s;
-        cursor: pointer;
-    }
-    .tryLink{
-        width: 86%;
-        /* height: 5vh; */
-        height: 7.2vw;
-        margin-left: 7%;
-        border-radius: 3vw;
-        background-color: rgb(37,90,84);
-        color:white;
-        font-weight: 600;
-        /* font-size: 1.7vh; */
-        font-size: 2.3vw;
-        margin-top: 2vw;
-    }
-    .navExtra{
-        background-color: transparent;
-        height: 100%;
-    }
-}
-@media screen and (max-width: 767px) {
+
+@media screen and (max-width: 991px) {
     .homepage_navigation_mainBox{
-        /* background-color: rgb(47,119,111); */
         background-color: white;
+        position: absolute;
+        width: 100%;
+        z-index: 100000;
+    }
+    .homepage_navigation_fixed{
+        position: fixed;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     }
     .homepage_navigation_logoBar{
         width: 100%;
         height: 16.5vw;
-        /* background-color: rgb(47,119,111); */
         display: flex;
         justify-content: space-between;
-        z-index: 1000;
-        padding: 0 5vw;
-        
+        padding: 0 5vw; 
+        position: relative; 
+        z-index: 100000;
+        background-color: white;
     }
     .homepage_navigation_logoBar img{
         width: 50vw;
@@ -220,26 +120,25 @@
     .homepage_navigation_navMain{
         position: absolute;
         width: 100%;
+        padding-top: 5vw;
+        padding-bottom: 5vw;
         border-bottom: 1px solid black;
-        border-radius: 0.5vw;
-        height: 80vw;
         padding-top: 2vw;
         background-color: white;
         transform: translate(0,-97vw);
         transition: linear 0.2s;
+        
     }
-    /* .homepage_navigation_navMain{
-        display: none;
-    } */
+
     .homepage_navigation_navMainOpen{
         transform: translate(0,0);
     }
     .homepage_navigation_navSubMenu{
-        /* background-color: white; */
-        
         display: flex;
         flex-direction: column;
         text-align: center;
+        position: relative;
+        z-index: 1000;
     }
     .homepage_navigation_navMenuPageLinks{
         padding: 3vw 2vw;

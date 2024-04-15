@@ -1,7 +1,12 @@
-FROM redis:latest
+FROM node:18-alpine
 
-# Set your desired password (optional)
-EXPOSE 6379
-# ENV REDIS_PASSWORD your_password
+WORKDIR /app
 
-CMD ["redis-server", "--appendonly", "yes"]
+COPY . /app
+
+RUN npm rebuild bcrypt --build-from-source \
+    && npm install
+
+EXPOSE 8000
+
+CMD ["node", "index.js"]

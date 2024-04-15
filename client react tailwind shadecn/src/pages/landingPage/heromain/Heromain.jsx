@@ -1,22 +1,23 @@
 import React from 'react'
-import './Heromain.css';
+import './Heromain.css'
 const Heromain = () => {
   return (
-    <div className='heromain_background'>
-        <div className='heromain'>
-            <div className='heromain_mainBox'>
-                <h1>Need a sentence for heromain that is powerfull and bold for tagline</h1>
-                <h2 className='font-semibold'>Subheader small sentence under</h2>
-                <div className='heromain_buttonBox'>
-                    <a href="https://app.replymind.com/" target="_blank" rel="noopener noreferrer" className="heromain_extensionButton">
-                        <p className="mx-auto my-auto font-semibold">Do something</p>
-                    </a>
-                    <a href="https://app.replymind.com/" target="_blank" rel="noopener noreferrer" className="heromain_installButton">
-                        <p className="mx-auto my-auto text-white font-semibold">Do another thing</p>
-                    </a>
+    <div className='homapage_heromain'>
+        <div className='homapage_heromain_mainBox'>
+            <div className='homapage_heromain_textBox'>
+                <p>Explore waste management</p>
+                <h1>Join us revolutionizing waste management practices and problems</h1>
+                <h2>Partner with us to implement sustainable waste solutions</h2>
+                <div className='homapage_heromain_textBox_inputBox'>
+                  <button><a href="https://replymind.lemonsqueezy.com/affiliates" target="_blank">More</a></button>
                 </div>
+                
+            </div>
+            <div className='homapage_heromain_imageBox'>
+                <img src='https://i.pinimg.com/originals/20/db/3d/20db3d7278ccdd243a9954b921f2eb9d.jpg' alt="homepage image" loading="lazy"/>
             </div>
         </div>
+
     </div>
   )
 }
