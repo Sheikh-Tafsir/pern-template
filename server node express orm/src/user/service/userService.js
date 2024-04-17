@@ -2,6 +2,7 @@ const PermissionModel = require("../../roles/model/PermissionModel");
 const RoleModel = require("../../roles/model/RoleModel");
 const UserModel = require("../model/UserModel");
 const { Op } = require('sequelize');
+const redis = require('../../../config/redisConfig');
 
 const getAllUsers = async() =>{
     try{
@@ -104,13 +105,21 @@ const deleteUser = async (id) => {
 
 const getAllRoles = async () => {
     try{
-        //const roles = await RoleModel.findAll();
+        const cachedRoles = await redis.getAsync('allroles');
         
+        if(cachedRoles){
+            return{
+                message: "found all roles",
+                roles: JSON.parse(cachedRoles),
+            };
+        }
+
         // Fetch roles along with associated permissions
         const roles = await RoleModel.findAll({
             include: PermissionModel, // Include PermissionModel association
         });
 
+        await redis.setAsync('allroles', JSON.stringify(roles));
         //console.log(roles);
         return {
             message: "found all roles",

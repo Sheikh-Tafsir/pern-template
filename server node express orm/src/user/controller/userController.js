@@ -65,7 +65,7 @@ const UserService = require('../service/UserService');
     //get list of users
     const getAllRoles = async (req, res) => {
           try {
-            console.log("tafsir");
+            // console.log("tafsir");
             const userService = await UserService.getAllRoles();
             res.status(200).json(userService);
           } catch (error) {

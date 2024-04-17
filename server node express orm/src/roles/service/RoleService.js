@@ -2,6 +2,8 @@ const RoleModel = require("../model/RoleModel");
 const PermissionModel = require("../model/PermissionModel");
 const RolePermissionModel = require("../model/RolePermissionModel");
 
+const redis = require('../../../config/redisConfig');
+
 //signup
 const createRole = async (name) => {
     try {
@@ -69,13 +71,11 @@ const assignPermission = async (roleId, permissionId) => {
         if (existingAssignment) {
             return { message: "Permission already assigned to this role" };
         }
-        console.log("hi");
         // Create the user
         const rolePermissionModel = await RolePermissionModel.create({
             roleId: roleId,
             permissionId: permissionId
         });
-        console.log("hi2");
 
         return {
             message: "Permission assigned",
@@ -90,28 +90,45 @@ const assignPermission = async (roleId, permissionId) => {
     }
 };
 
-const getAllRoles = async () => {
-    try{
-        const roleModel = await RoleModel.findAll();
-
-        //console.log(roles);
-        return {
-            message: "found all role",
-            roles: roleModel,
-        };
-    } catch (error) {
-        console.error("Error getting all roles:", error.message);
-        return {
-            message: error.message,
-        };
-    }
-}
+// const getAllRoles = async () => {
+//     try{
+        
+//         const cachedRoles = await redis.getAsync('allroles');
+        
+//         if(cachedRoles){
+//             console.log('redis cache');
+//             return{
+//                 message: "found all role",
+//                 roles: JSON.parse(cachedRoles),
+//             };
+//         }
+//         console.log('not redis cache');
+//         const roleModel = await RoleModel.findAll();
+//         await redis.setAsync('allRoles', JSON.stringify(roleModel));
+//         return {
+//             message: "found all role",
+//             roles: roleModel,
+//         };
+//     } catch (error) {
+//         console.error("Error getting all roles:", error.message);
+//         return {
+//             message: error.message,
+//         };
+//     }
+// }
 
 const getAllPermissions = async () => {
     try{
-        const permissionModel = await PermissionModel.findAll();
+        const cachedPermissions = await redis.getAsync('allpermissions');
+        if(cachedPermissions){
+            return {
+                message: "found all permissions",
+                permissions: cachedPermissions,
+            };
+        }
 
-        //console.log(roles);
+        const permissionModel = await PermissionModel.findAll();
+        await redis.setAsync('allpermissions', JSON.stringify(permissionModel));
         return {
             message: "found all permissions",
             permissions: permissionModel,
@@ -128,6 +145,6 @@ module.exports = {
     createRole,
     createPermission,
     assignPermission,
-    getAllRoles,
+    // getAllRoles,
     getAllPermissions,
 }

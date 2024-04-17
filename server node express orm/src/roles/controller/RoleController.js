@@ -53,15 +53,15 @@ const assignPermission = async (req, res) => {
 };
 
 //get list of roles
-const getAllRoles = async (req, res) => {
-  try {
-    const roleService = await RoleService.getAllRoles();
-    res.status(200).json(roleService);
-  } catch (error) {
-    console.error("Error getting all permissions:", error.message);
-    res.status(500).json({ error: error.message });
-  }
-}; 
+// const getAllRoles = async (req, res) => {
+//   try {
+//     const roleService = await RoleService.getAllRoles();
+//     res.status(200).json(roleService);
+//   } catch (error) {
+//     console.error("Error getting all permissions:", error.message);
+//     res.status(500).json({ error: error.message });
+//   }
+// }; 
 
 //get list of permissions
 const getAllPermissions = async (req, res) => {
@@ -77,6 +77,6 @@ module.exports = {
     createRole,
     createPermission,
     assignPermission,
-    getAllRoles,
+    // getAllRoles,
     getAllPermissions,
 }

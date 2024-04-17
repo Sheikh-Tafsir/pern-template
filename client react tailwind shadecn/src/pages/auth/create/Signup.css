@@ -3,10 +3,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20210824/pngtree-yellow-green-background-stock-images-wallpaper-image_769660.jpg');
-    background-size: 100vw 90vh;
+    background-image: url('https://wallpapers.com/images/hd/microsoft-teams-blur-background-2158-x-1440-dz4xsybgwub3dwps.jpg');
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    height: 89vh;
+    min-height: 100vh;
 }
 @media (min-width: 767px) {
     .signup_mainBox{
@@ -27,6 +27,7 @@
         height: 3.5vw;
         font-size: 1vw;
         margin-top: 1.5vw;
+        padding-left: 1vw;
     }
     .signup_mainBox p{
         text-align: center;
