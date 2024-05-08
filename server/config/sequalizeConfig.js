@@ -1,3 +1,4 @@
+const pg = require('pg');
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
@@ -5,6 +6,7 @@ const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTG
   host: process.env.POSTGRES_HOST,
   port: process.env.POSTGRES_PORT,
   dialect: 'postgres',
+  dialectModule: pg,
   dialectOptions: {
     ssl: {
       require: true,
