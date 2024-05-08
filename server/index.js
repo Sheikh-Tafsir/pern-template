@@ -21,10 +21,10 @@ app.get("/", (req, res) => {
 
 app.use("/auth", require("./src/auth/route/AuthRoute"));
 app.use("/users", require("./src/user/route/UserRoute"));
-app.use("/profile", require("./src/profile/route/ProfileRoute"));
-app.use("/rbac", require("./src/roles/route/RoleRoute"));
-app.use("/vehicles", require("./src/vehicle/route/VehicleRoute"));
-app.use("/sts", require("./src/sts/route/StsRoute"));
+// app.use("/profile", require("./src/profile/route/ProfileRoute"));
+// app.use("/rbac", require("./src/roles/route/RoleRoute"));
+// app.use("/vehicles", require("./src/vehicle/route/VehicleRoute"));
+// app.use("/sts", require("./src/sts/route/StsRoute"));
 // app.use("/chatbot", require("./src/chatbot/route/ChatBotRoute"));
 
 const PORT = process.env.PORT || 8000;
