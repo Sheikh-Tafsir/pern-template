@@ -27,7 +27,7 @@ app.use("/vehicles", require("./src/vehicle/route/VehicleRoute"));
 app.use("/sts", require("./src/sts/route/StsRoute"));
 app.use("/chatbot", require("./src/chatbot/route/ChatBotRoute"));
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
